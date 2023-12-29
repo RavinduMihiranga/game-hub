@@ -30,7 +30,7 @@ const useGames = (gameQuery: GameQuery) =>
     getNextPageParam: (lastPage, allPages) => {
       return lastPage.next ? allPages.length + 1 : undefined;
     },
-    // staleTime: 1000 * 60 * 60 * 24, // no request will be made to the backend to fetch data until 24 hrs
+    staleTime: 1000 * 60 * 60 * 24, // no request will be made to the backend to fetch data until 24 hrs
     // initialData: { count: 0, results: [] }, // these data will be inserted into the cache
   });
 
