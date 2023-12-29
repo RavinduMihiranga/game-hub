@@ -1,5 +1,6 @@
+import { useQuery } from "@tanstack/react-query";
 import { GameQuery } from "../App";
-import useData from "./useData";
+import apiClient, { FetchResponse } from "../services/api-client";
 
 export interface Platform {
   id: number;
@@ -16,17 +17,21 @@ export interface Game {
 }
 
 const useGames = (gameQuery: GameQuery) =>
-  useData<Game>(
-    "/games",
-    {
-      params: {
-        genres: gameQuery.genre?.id,
-        platforms: gameQuery.platform?.id,
-        ordering: gameQuery.sortOrder,
-        search: gameQuery.searchText,
-      },
-    },
-    [gameQuery]
-  );
+  useQuery<FetchResponse<Game>, Error>({
+    queryKey: ["games", gameQuery], // if gameQuery is changed the react query will fetch data from the server
+    queryFn: () =>
+      apiClient
+        .get<FetchResponse<Game>>("/games", {
+          params: {
+            genres: gameQuery.genre?.id,
+            parent_platforms: gameQuery.platform?.id,
+            ordering: gameQuery.sortOrder,
+            search: gameQuery.searchText,
+          },
+        })
+        .then((response) => response.data),
+    // staleTime: 1000 * 60 * 60 * 24, // no request will be made to the backend to fetch data until 24 hrs
+    // initialData: { count: 0, results: [] }, // these data will be inserted into the cache
+  });
 
 export default useGames;
