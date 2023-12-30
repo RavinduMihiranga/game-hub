@@ -15,7 +15,7 @@ const useGenres = () =>
     queryKey: ["genres"],
     queryFn: apiClient.getAll,
     staleTime: 1000 * 60 * 60 * 24, // no request will be made to the backend to fetch data until 24 hrs
-    initialData: { count: genres.length, results: genres }, // these data will be inserted into the cache
+    initialData: genres, // these data will be inserted into the cache
   });
 
 export default useGenres;
