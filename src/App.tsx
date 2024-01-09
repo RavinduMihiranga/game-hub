@@ -1,5 +1,4 @@
 import { Box, Flex, Grid, GridItem, Show } from "@chakra-ui/react";
-import { useState } from "react";
 import GameGrid from "./components/GameGrid";
 import GameHeading from "./components/GameHeading";
 import GenreList from "./components/GenreList";
@@ -11,16 +10,7 @@ import { SortSelector } from "./components/SortSelector";
 // * undefined : the absence of a value
 // * null : the intentional absence of a value
 
-export interface GameQuery {
-  genreID?: number; // genreID? means number | undefined
-  platformID?: number;
-  sortOrder: string;
-  searchText: string;
-}
-
 function App() {
-  const [gameQuery, setGameQuery] = useState<GameQuery>({} as GameQuery);
-
   return (
     <Grid
       templateAreas={{
@@ -34,40 +24,50 @@ function App() {
     >
       <GridItem area="nav">
         <NavBar
-          onSearch={(searchText) => setGameQuery({ ...gameQuery, searchText })}
+        // ! Use Zustand to avoid prop drilling
+        // onSearch={(searchText) => setGameQuery({ ...gameQuery, searchText })}
         />
       </GridItem>
       <Show above="lg">
         <GridItem area="aside" paddingX={5}>
           <GenreList
-            selectedGenreID={gameQuery.genreID}
-            onSelectGenre={(genre) =>
-              setGameQuery({ ...gameQuery, genreID: genre.id })
-            }
+          // ! Use Zustand to avoid prop drilling
+          // selectedGenreID={gameQuery.genreID}
+          // onSelectGenre={(genre) =>
+          //   setGameQuery({ ...gameQuery, genreID: genre.id })
+          // }
           />
         </GridItem>
       </Show>
       <GridItem area="main">
         <Box paddingLeft={2}>
-          <GameHeading gameQuery={gameQuery} />
+          <GameHeading
+          // ! Use Zustand to avoid prop drilling
+          // gameQuery={gameQuery}
+          />
           <Flex marginBottom={5}>
             <Box marginRight={5}>
               <PlatformSelector
-                selectedPlatformID={gameQuery.platformID}
-                onSelectPlatform={(platform) =>
-                  setGameQuery({ ...gameQuery, platformID: platform.id })
-                }
+              // ! Use Zustand to avoid prop drilling
+              // selectedPlatformID={gameQuery.platformID}
+              // onSelectPlatform={(platform) =>
+              //   setGameQuery({ ...gameQuery, platformID: platform.id })
+              // }
               />
             </Box>
             <SortSelector
-              sortOrder={gameQuery.sortOrder}
-              onSelectSortOrder={(sortOrder) =>
-                setGameQuery({ ...gameQuery, sortOrder })
-              }
+            // ! Use Zustand to avoid prop drilling
+            // sortOrder={gameQuery.sortOrder}
+            // onSelectSortOrder={(sortOrder) =>
+            //   setGameQuery({ ...gameQuery, sortOrder })
+            // }
             />
           </Flex>
         </Box>
-        <GameGrid gameQuery={gameQuery} />
+        <GameGrid
+        // ! Use Zustand to avoid prop drilling
+        // gameQuery={gameQuery}
+        />
       </GridItem>
     </Grid>
   );

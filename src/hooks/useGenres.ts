@@ -1,15 +1,23 @@
+/**
+ * This file contains the TypeScript code for the "useGenres" custom hook.
+ * It utilizes the "useQuery" hook from the "@tanstack/react-query" library
+ * to fetch genre data from an API and cache it for 24 hours.
+ * The initial data is provided from a local file.
+ */
+
 import { useQuery } from "@tanstack/react-query";
 import ms from "ms";
 import genres from "../data/genres";
 import APIClient from "../services/api-client";
 
-const apiClient = new APIClient<Genre>("/genres");
-
+// Define the structure of a Genre object
 export interface Genre {
   id: number;
   name: string;
   image_background: string;
 }
+
+const apiClient = new APIClient<Genre>("/genres");
 
 const useGenres = () =>
   useQuery({
