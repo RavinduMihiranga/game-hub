@@ -34,7 +34,7 @@ const GameGrid = ({ gameQuery }: Props) => {
 
     <InfiniteScroll
       dataLength={fetchedGamesCount}
-      hasMore={!!hasNextPage}
+      hasMore={!!hasNextPage}   // convert it to a boolean
       next={() => fetchNextPage()}
       loader={<Spinner />}
     >
